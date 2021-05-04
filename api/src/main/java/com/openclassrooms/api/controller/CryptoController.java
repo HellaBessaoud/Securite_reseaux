@@ -10,7 +10,7 @@ public class CryptoController {
 
 	// Chiffrement Cesar :
 	@GetMapping("/crypto/{value}/{shift}")
-	public String getString(@PathVariable("value") String value,@PathVariable("shift") int shift) {
+	public String cryptCesar(@PathVariable("value") String value,@PathVariable("shift") int shift) {
 		char[] chars = value.toCharArray();
 		for (int i=0; i < value.length(); i++)
 		{
@@ -54,14 +54,14 @@ System.out.println(key);
 		for (int i = 0; i < textSize; i++) {
 			final char plainChar = plaintext.charAt(i);
 
-			// this should be a method, called for both the plain text as well as the key
+
 			final int plainGroupNumber;
 			if (plainChar >= 'A' && plainChar <= 'Z') {
 				plainGroupNumber = plainChar - 'A';
 			} else if (plainChar >= 'a' && plainChar <= 'z') {
 				plainGroupNumber = groupSize1 + plainChar - 'a';
 			} else {
-				// simply leave spaces and other characters
+
 				encryptedText.append(plainChar);
 				continue;
 			}
@@ -73,15 +73,15 @@ System.out.println(key);
 			} else if (keyChar >= 'a' && keyChar <= 'z') {
 				keyGroupNumber = groupSize1 + keyChar - 'a';
 			} else {
-				throw new IllegalStateException("Invalid character in key");
+				throw new IllegalStateException("Charactere invalide ");
 			}
 
-			// this should be a separate method
+
 			final int cipherGroupNumber;
 			if (encrypt) {
 				cipherGroupNumber = (plainGroupNumber + keyGroupNumber) % totalGroupSize;
 			} else {
-				// some code to go around the awkward way of handling % in Java for negative numbers
+
 				final int someCipherGroupNumber = plainGroupNumber - keyGroupNumber;
 				if (someCipherGroupNumber < 0) {
 					cipherGroupNumber = (someCipherGroupNumber + totalGroupSize);
@@ -90,7 +90,7 @@ System.out.println(key);
 				}
 			}
 
-			// this should be a separate method
+
 			final char cipherChar;
 			if (cipherGroupNumber < groupSize1) {
 				cipherChar = (char) ('A' + cipherGroupNumber);
@@ -112,20 +112,18 @@ System.out.println(key);
 	@GetMapping("/cry/{text}/{key}")
 	public  String VigenereDecrypt(@PathVariable("text")String text, @PathVariable("key") String key)
 	{
-		String orig_text="";
+		String vigenereDecryptee="";
 
 		for (int i = 0 ; i < text.length() &&
 				i < key.length(); i++)
 		{
-			// converting in range 0-25
+
 			int x = (text.charAt(i) +
 					key.charAt(i) + 26) %26;
-
-			// convert into alphabets(ASCII)
 			x += 'A';
-			orig_text+=(char)(x);
+			vigenereDecryptee+=(char)(x);
 		}
-		return orig_text;}
+		return vigenereDecryptee;}
 
 
 
